@@ -21,8 +21,26 @@
     # round(값, 소수점숫자): 반올림
     print(round(result,2)) # 평균값
 
-# 문제4) list b에서 최소값 찾기!
+# 문제4) list b에서 최소값 찾기
+b = [22, 1, 4, 7, 98]
 
-b = [22,1,4,7,98]
+num_min = b[0]
+for x in b:
+    if x < num_min:
+        num_min = x
+print(num_min)  # 1 출력
 
-print(num_min) # '1'을 출력
+# 문제 5) list b의 최소값, 최대값 찾기
+c = [2, 5, 7, 1, 8]
+
+print(num_min)   # 1 출력
+print(num_max)   # 8 출력
+
+num_min = c[0]
+num_max = c[0]
+for x in range c:
+    if x < num_min:
+        num_min = x
+    if x > num_max:
+        num_max = x
+
