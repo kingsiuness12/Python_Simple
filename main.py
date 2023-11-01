@@ -1,62 +1,98 @@
-##############################
-# " 스타벅스" 카페 키오스크 프로그램
-# - 일자: 2023년 10월 13일
-# - 작성자 : 이상빈
-# - 내용: 카페 음료를 주문 및 판매하는 콘솔 프로그램
+# WebCrawling(웹 크롤링)
+# - 웹 페이지에서 원하는 데이터를 수집하는 기술
+# - 데이터가 필요한 작업 -> 원하는 데이터가 없는 경우!
+#                          (제공X, 다운X)
+#      ->웹크롤링을 사용해서 직접 데이터를 수집
 
-# 조건
-# 1. 사용자는 최대 음료 1개, 베이커릐 1개, 굿즈 1개 구매가능
-from service_kiosk import user_choice
-# 메뉴와 가격표
-# - Dict Type -> 데이터베이스
-main_name = {1: "음료(Drink)", 2: "빵(Bakery)", 3:"굿즈(Goods)"}
-drink_name = {1: "아메리카노", 2: "돌체콜드브루",3:"딸기라떼", 4:"자몽에이드"}
-bakery_name = {1:"카스테라", 2:"크로플", 3: "바움쿠헨"}
-goods_name = {1:"텀블러",2:" 비치타월", 3:"무드등"}
+# - 직업: 웹 크롤러(전문)
+# -      데이터엔지니어(웹 크롤링 + @)
 
-drink_price = {1: 3000, 2: 4500, 3: 6000, 4: 5000}
-bakery_price = {1: 4500, 2: 5000, 3: 7000}
-goods_price = {1: 10000, 2: 7000, 3: 17000}
+# - 웹크롤링 + 스케줄링 -> 자동화
 
-# 고객 주문 기록 저장
-menu_save = {}      # 고객 주문 메뉴 기록
-price_save = {}     # 고객 주문 금액 기록
+# 라이버러리
+# 1. BeautifulSoup4(bs4)
+# 2. Requests
+# 3.Selenium
 
-# 1. 메인 메뉴 출력
-print("ㅁ" * 50)
-print("ㅁㅁ == 스타벅스 == ")
-print("ㅁㅁ == ver 1.2 ")
-print("ㅁㅁ 메인메뉴")
-for i in range(len(main_name)):
-    print(f"ㅁㅇ {i+1}.{main_name[i+1]}")
-print("ㅁ" * 20 )
+# 웹 페이지
+#   - 정적 페이지(Requests + bs4)
+#   - 동적 페이지(Selenium + bs4)
 
-# 2. 메인 메뉴 선택
-choice = user_choice(len(main_name), "main")
-# 3. 메인 메뉴 출력
-if choice == 1:     # 음료
-    print("🤢🤢 음료(Drink) 메뉴")
-    for i in range(len(drink_name)):
-        print(f"🤢😊 {i+1}.{drink_name[i+1]} {drink_price[i+1]}원")
-    # 4.세부 메뉴 선택
-    sub = user_choice(len(drink_name),"sub")
-elif choice == 2:   # 빵
-    for i in range(len(bakery_name)):
-        print(f"🤢😊 {i + 1}.{bakery_name[i + 1]} {bakery_price[i + 1]}원")
-    sub = user_choice(len(bakery_name), "sub")
-elif choice == 3:   # 굿즈
-    for i in range(len(goods_name)):
-        print(f"🤢😊 {i + 1}.{goods_name[i + 1]} {goods_price[i + 1]}원")
-    sub = user_choice(len(goods_name), "sub")
-elif choice == 99:
-    print("MSG: 스타벅스 키오스크를 종료합니다.")
-    exit()
-print(sub)
-# 4. 세부 메뉴 선택
-choice = int(input(">> 번호: "))
+# conda env list -> basic 확인
+# 없으면: conda create -n basic python=3.8
+# conda activate basic
+# pip install requests
+# pip install beautifulsoup4
+# pip install selenium
+# import requests
+# import selenium
+# from bs4 import BeautifulSoup
 
+# 웹 프로그래밍 기초(속성)
+# - 프론트 엔드: 사용자 화면 개발
+# - 백 엔드: 서비스와 DB 개 애 발
+# - 풀 스택: 프론트 엔드+ 백 엔드
 
+# NVC 패턴
+# - VIEW(사용자 화면)
+# - CONTROLLER
+# - MODEL(데이터베이스:저장)
 
+# 웹 페이지 화면 구현
+# - 웹 표준: HTML, CSS, Javascript
+# 1. HTML: 프레임 구현
+# 2. CSSL 디자인(색상, 크기, 모양, 등등)
+# 3. Javascript: 동적 기능
 
+# HTML 속성
+# - <tag></tag> 구현
+# - tag 종류: div, span, a, h4, etc...
+# - tag 종속관계
+#   <div>
+#      <span>
+#        <span></span>
+#      <span></span>
+#   </div>
+#     div: 부모
+#      ㄴ span:자식
+#      종속관계: 부모자식 (div > span: div 태그의 자식 태그인 span)
+#               자손(div span: div태그 안에 모든 span)
+
+# 선택자
+#   1.ID(#): 유일한 선택자
+#   2.CLASS(.): 복수 선택쟈
+
+import requests
+from bs4 import BeautifulSoup
+url = "https://v.daum.net/v/20231101111111618"         # 수집하고 싶은
+
+# 1. URL에 접속해서 전체 소스코드 가져오기!
+result = requests.get(url)
+# status_code: 200(성공)
+#              400번대, 500번대 오류
+# print(result)
+# print(result.text)
+
+# 2.전체소스코드(requests) -> bs4
+doc = BeautifulSoup(result.text, "html.parser")
+
+# 3. 원하는 정보 수집
+title = doc.select("h3.tit_view")[0].get_text()
+# select() -> 결과: List Type
+print(title)
+print(f"제목:{title}")
+
+# 경고: tag 이름으로는 절대 수집 x
+content_list = doc.select("div.article_view p")
+print(content_list)
+
+content = ""
+for p in content_list:
+    content += p.get_text()
+print(f"본문: {content}")
+
+# 날짜 수집 = 홈 워크
+reg_date = doc.select("")
+print(f"날짜: {reg_date}")
 
 
